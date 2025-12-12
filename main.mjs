@@ -32,7 +32,6 @@ client.once("ready", () => {
 });
 
 client.on("messageCreate", async (message) => {
-
     try {
         if (message.author.bot) {
             return;
@@ -42,8 +41,6 @@ client.on("messageCreate", async (message) => {
             model: "gemini-2.5-flash",
             contents: message.content,
         });
-
-        const result = await model.generateContent(message.content);
 
         await message.reply(response.text);
     } catch (error) {
