@@ -37,12 +37,18 @@ client.on("messageCreate", async (message) => {
             return;
         }
 
-        const response = await ai.models.generateContent({
-            model: "gemini-2.5-flash",
-            contents: message.content,
-        });
+        if (message.content.toLowerCase().includes("test")) {
 
-        await message.reply(response.text);
+            await message.react("🏓");
+        }
+        else {
+            const response = await ai.models.generateContent({
+                model: "gemini-2.5-flash",
+                contents: message.content,
+            });
+
+            await message.reply(response.text);
+        }
     } catch (error) {
         console.error(error);
     }
