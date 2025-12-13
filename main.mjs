@@ -65,6 +65,7 @@ client.on("messageCreate", async (message) => {
                     「Unanswered Questions」
                     「Actions to follow up on」
                     AMとPM別々に抽出結果かわかるように返してください。
+                    各抽出結果だけを横一列にExcelに入力できるように、Tabで区切ったものも返してください。
                     余計な説明や前置きは不要です。
                     テキストのみ返してください。
                     `;
