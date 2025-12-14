@@ -1,5 +1,13 @@
-import { Client, GatewayIntentBits } from "discord.js";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { 
+    Client, 
+    GatewayIntentBits, 
+    ActionRowBuilder, 
+    ButtonBuilder, 
+    ButtonStyle, 
+} from "discord.js";
+import { 
+    GoogleGenerativeAI, 
+} from "@google/generative-ai";
 import dotenv from "dotenv";
 import express from "express";
 
@@ -45,40 +53,56 @@ client.on("messageCreate", async (message) => {
             );
 
             if (images.size > 0) {
-                const image = images.first();
-                const imageUrl = image.url;
+                const row = new ActionRowBuilder().addComponents(
+                    new ButtonBuilder()
+                        .setCustomId("select_am")
+                        .setLabel("AM")
+                        .setStyle(ButtonStyle.Primary),
+                    new ButtonBuilder()
+                        .setCustomId("select_pm")
+                        .setLabel("PM")
+                        .setStyle(ButtonStyle.Secondary)
+                );
 
-                const response = await fetch(imageUrl);
-                const buffer = await response.arrayBuffer();
-                const base64Image = Buffer.from(buffer).toString("base64");
+                await message.reply({
+                    content: "どちらのシフトを抽出しますか？",
+                    components: [row],
+                });
 
-                const prompt = `
-                この画像は左右で2つに分かれたシフト記録で、左側がAMシフトの表、右側がPMシフトの表です。
-                画像の中からAMとPM別々に以下の11項目のテキストを抽出してください。
-                「Highlights」
-                「Challenges」
-                「Comments/Observations」
-                「Unanswered Questions」
-                AMとPMそれぞれの各抽出結果のみを横一列にExcelに入力できるように、Tabで区切ったものも返してください。
-                余計な説明や前置きは不要です。
-                テキストのみ返してください。
-                `;
+                // const image = images.first();
+                // const imageUrl = image.url;
 
-                const result = await model.generateContent([
-                    {
-                        text: prompt,
-                    },
-                    {
-                        inlineData: {
-                            data: base64Image,
-                            mimeType: image.contentType || "image/png",
-                        },
-                    },
-                ]);
+                // const response = await fetch(imageUrl);
+                // const buffer = await response.arrayBuffer();
+                // const base64Image = Buffer.from(buffer).toString("base64");
 
-                const text = result.response.text();
+                // const prompt = `
+                // この画像は左右で2つに分かれたシフト記録で、左側がAMシフトの表、右側がPMシフトの表です。
+                // 画像の中からAMとPM別々に以下の11項目のテキストを抽出してください。
+                // 「Highlights」
+                // 「Challenges」
+                // 「Comments/Observations」
+                // 「Unanswered Questions」
+                // AMとPMそれぞれの各抽出結果のみを横一列にExcelに入力できるように、Tabで区切ったものも返してください。
+                // 余計な説明や前置きは不要です。
+                // テキストのみ返してください。
+                // `;
 
-                await message.reply(text);
+                // const result = await model.generateContent([
+                //     {
+                //         text: prompt,
+                //     },
+                //     {
+                //         inlineData: {
+                //             data: base64Image,
+                //             mimeType: image.contentType || "image/png",
+                //         },
+                //     },
+                // ]);
+
+                // const text = result.response.text();
+
+                // await message.reply(text);
             }
             else {
 
