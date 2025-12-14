@@ -53,19 +53,11 @@ client.on("messageCreate", async (message) => {
                     const prompt = `
                     この画像は左右で2つに分かれたシフト記録で、左側がAMシフトの表、右側がPMシフトの表です。
                     画像の中からAMとPM別々に以下の11項目のテキストを抽出してください。
-                    「Date」
-                    「Shift Leader(s)」
-                    「Volunteers on shift」
-                    「Guest Contacts」
-                    「Security/Animal-related radio calls」
-                    「GE/Building Services-related radio calls」
                     「Highlights」
                     「Challenges」
                     「Comments/Observations」
                     「Unanswered Questions」
-                    「Actions to follow up on」
-                    AMとPM別々に抽出結果かわかるように返してください。
-                    各抽出結果だけを横一列にExcelに入力できるように、Tabで区切ったものも返してください。
+                    AMとPM別々に各抽出結果を横一列にExcelに入力できるように、Tabで区切ったものも返してください。
                     余計な説明や前置きは不要です。
                     テキストのみ返してください。
                     `;
