@@ -114,14 +114,13 @@ client.on("interactionCreate", async (interaction) => {
 
     const prompt = `
 この画像は左右2つに分かれたシフト記録で、左側がAM、右側がPMです。
-${shiftType}のみから以下の項目に記述してある手書きの文を抽出してください。
-
+${shiftType}のみから以下の項目に記述してある手書き文を抽出してください。
+何も記述されてない項目は空文字列で処理してください。
 「Highlights」
 「Challenges」
 「Comments/Observations」
 「Unanswered Questions」
-
-抽出した手書きの文のみをExcelに貼れるようTab区切りで返してください。
+抽出した手書き文のみをExcelに貼れるようTab区切りで返してください。
 余計な説明や前置きは不要です。
 テキストのみ返してください。
 `;
