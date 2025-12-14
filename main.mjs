@@ -33,7 +33,7 @@ const client = new Client({
     ],
 });
 
-const imageStore = new Map();
+const imageMap = new Map();
 
 client.once("ready", () => {
     console.log("woke up.");
@@ -58,17 +58,17 @@ client.on("messageCreate", async (message) => {
                 const image = images.first();
 
                 const imageId = `${message.id}-${Date.now()}`;
-                imageStore.set(imageId, image.url);
+                imageMap.set(imageId, image.url);
 
                 const row = new ActionRowBuilder().addComponents(
                     new ButtonBuilder()
-                        .setCustomId(`select_am:${imageId}`)
+                        .setCustomId(`AM:${imageId}`)
                         .setLabel("AM")
                         .setStyle(ButtonStyle.Primary),
                     new ButtonBuilder()
-                        .setCustomId(`select_pm:${imageId}`)
+                        .setCustomId(`PM:${imageId}`)
                         .setLabel("PM")
-                        .setStyle(ButtonStyle.Secondary)
+                        .setStyle(ButtonStyle.Primary)
                 );
 
                 await message.reply({
@@ -98,9 +98,8 @@ client.on("interactionCreate", async (interaction) => {
             return;
         }
 
-        const [type, imageId] = interaction.customId.split(":");
-        const shiftType = type === "select_am" ? "AM" : "PM";
-        const imageUrl = imageStore.get(imageId);
+        const [shift, imageId] = interaction.customId.split(":");
+        const imageUrl = imageMap.get(imageId);
 
         await interaction.deferReply();
 
@@ -115,7 +114,7 @@ client.on("interactionCreate", async (interaction) => {
 
         const prompt = `
             この画像は左右2つに分かれたシフト記録で、左側がAM、右側がPMです。
-            ${shiftType}のみから以下の項目に記述してある手書き文を抽出してください。
+            ${shift}のみから以下の項目に記述してある手書き文を抽出してください。
             何も記述されてない項目の手書き文は"-"としてください。
             「Highlights」
             「Challenges」
