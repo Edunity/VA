@@ -121,7 +121,7 @@ client.on("interactionCreate", async (interaction) => {
             「Challenges」
             「Comments/Observations」
             「Unanswered Questions」
-            抽出した手書き文のみをExcelに貼れるようにTab区切りで返してください。
+            抽出した手書き文のみを|||区切りで返してください。
             余計な説明や前置きは不要です。
             テキストのみ返してください。
         `;
@@ -136,7 +136,9 @@ client.on("interactionCreate", async (interaction) => {
             },
         ]);
 
-        await interaction.editReply(result.response.text());
+        const text = result.response.text().replace(/\|\|\|/g, "\t");
+await interaction.editReply(text);
+
     } catch (error) {
         await message.reply("error.");
 
