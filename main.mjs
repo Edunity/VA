@@ -140,10 +140,9 @@ client.on("interactionCreate", async (interaction) => {
         ]);
 
         const text = result.response.text().replace(/\|\|\|/g, "\t");
-await interaction.editReply(text);
-
+        await interaction.editReply(text);
     } catch (error) {
-        await message.reply("error.");
+        await interaction.editReply("error.");
 
         console.error(error);
     }
