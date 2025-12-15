@@ -120,7 +120,7 @@ client.on("interactionCreate", async (interaction) => {
             「Challenges」
             「Comments/Observations」
             「Unanswered Questions」
-            抽出した手書き文のみをExcelに貼れるようTab区切りで返してください。
+            抽出した手書き文のみをExcelに貼れるようにTab区切り(半角スペース4つ)で返してください。
             余計な説明や前置きは不要です。
             テキストのみ返してください。
         `;
